@@ -39,35 +39,24 @@ public class Main
 	
 	public static int selectandprintorder(int[] olist)
 	{
-		int s;
+		int s = 0;
 		String orderview, claim;		
 		boolean valid = false;
 		Scanner reader = new Scanner(System.in);
-		System.out.println("Please select order for further details");
-		//try 
-		//{
-			s = reader.nextInt();
-		//}
-		//catch(java.util.InputMismatchException e)
-		//{
-		//	System.err.println("Please input valid integer");
-		//}
-		
-		
-		int olength = olist.length;
-		for(int i=0; i < olength; i++)
-		{
-			if(olist[i] == s)
-			{
-				valid = true;
-				break;
-			}
-		}
-		
-		while(valid == false)
+		while(!valid)
 		{
 			System.out.println("Please enter valid Order ID");
-			s = reader.nextInt();
+			try 
+			{
+				s = reader.nextInt();
+			}
+			catch(java.util.InputMismatchException e)
+			{
+				System.err.println("Please input valid integer");
+				reader.next();
+				s = 0;
+			}
+			int olength = olist.length;
 			for(int i=0; i < olength; i++)
 			{
 				if(olist[i] == s)
@@ -76,9 +65,8 @@ public class Main
 					break;
 				}
 			}
-			
 		}
-	
+			
 		System.out.println("Order " + s + " selected");
 		Order thisorder = createorder(s);
 		if(thisorder.getorderclaimed() == true)
